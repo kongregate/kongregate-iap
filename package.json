@@ -1,0 +1,8 @@
+{
+    "name": "com.kongregate.kongregate-iap",
+    "displayName": "Unity IAP for Kongregate",
+    "version": "0.1.0",
+    "unity": "2018.3",
+    "description": "Unity IAP store implementation for the Kongregate website.",
+    "keywords": ["kongregate", "javascript", "web", "store", "iap", "purchasing"]
+}
