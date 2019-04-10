@@ -243,7 +243,7 @@ public class KongregateStore : IStore
 							product.id,
 							metatdata,
 							JsonUtility.ToJson(receipt),
-							Guid.NewGuid().ToString());
+							transactionId);
 					}
 					else
 					{
