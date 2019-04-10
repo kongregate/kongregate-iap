@@ -111,8 +111,6 @@ public class KongregateStore : IStore
 
     void OnUserItemsUpdated(KongregateUserItem[] items)
     {
-        Debug.LogWarning("KongregateStore.OnUserItemsUpdated()");
-
         // Delegate processing of user items depending on the reason why we requested
         // the updated list of items.
         //
@@ -159,7 +157,7 @@ public class KongregateStore : IStore
     {
         if (_pendingPurchase == null)
         {
-            Debug.LogWarning("Updated items list when no purchase was pending");
+            Debug.LogError("Updated items list when no purchase was pending");
             return;
         }
 
