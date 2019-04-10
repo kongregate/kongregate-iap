@@ -73,6 +73,14 @@ public class KongregateStore : IStore
     #region KongJSGameObject Events
     void OnPurchaseSuccess(string[] items)
     {
+        if (_pendingPurchase == null)
+        {
+            Debug.LogErrorFormat(
+                "Received purchase success notification when no purchase was in progress: {0}",
+                string.Join(", ", items));
+            return;
+        }
+
         // When the purchase succeeds, request an updated list of user items from
         // Kongregate. The purchase items flow doesn't return the metadata for the
         // purchased item, so we need to request the items ourself to finish the
@@ -82,12 +90,20 @@ public class KongregateStore : IStore
 
     void OnPurchaseFail(string[] items)
     {
+        if (_pendingPurchase == null)
+        {
+            Debug.LogErrorFormat(
+                "Received purchase failure notification when no purchase was in progress: {0}",
+                string.Join(", ", items));
+            return;
+        }
+
         try
         {
             _callback.OnPurchaseFailed(new PurchaseFailureDescription(
                 _pendingPurchase.id,
-                PurchaseFailureReason.Unknown,
-                "Failed to make purchase"));
+                PurchaseFailureReason.UserCancelled,
+                "User closed purchase dialog"));
         }
         finally
         {
