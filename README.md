@@ -22,4 +22,35 @@ kongregate-iap depends on the [kongregate-web](https://github.com/randomPoison/k
 
 ## Usage
 
-> TODO: Provide a store module for registering the store instance.
+When initializing Unity IAP, provide `KongregatePurchasingModule.Instance()` to `ConfigurationBuilder.Instance()` in order to setup the Kongregate store on WebGL:
+
+```c#
+var builder = ConfigurationBuilder.Instance(
+    KongregatePurchasingModule.Instance(),
+    StandardPurchasingModule.Instance());
+```
+
+## Custom Purchasing Module
+
+The basic setup described will always configure your game to use the Kongregate store when building a WebGL player. However, if you need more control over when you use the Kongregate store on WebGL, you can create a [custom store module](https://docs.unity3d.com/Manual/UnityIAPModules.html) to do so. In your custom module's `Configure()` method, you should register `KongregateStore` as follows:
+
+```c#
+public override void Configure()
+{
+    RegisterStore(
+        KongregateStore.STORE_NAME,
+        UseKongregateStore ? new KongregateStore() : null);
+
+    // Register any other stores...
+}
+```
+
+## Receipt Data
+
+When using the Kongregate store, the `Store` field in the [purchase receipt](https://docs.unity3d.com/Manual/UnityIAPPurchaseReceipts.html) is "Kongregate". The `Payload` field  is a JSON-encoded string containing the following fields:
+
+* `AuthToken: string` - The authorization token for the user who made the purchase.
+* `Items: int[]` - An array of unique item IDs.
+
+You can use `UnityEngine.JsonUtility.FromJson()` to deserialize `Payload` into an instance of `KongregateStore.Receipt` if you need to inspect its contents.
+
