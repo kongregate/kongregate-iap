@@ -14,7 +14,7 @@ namespace Kongregate.Purchasing
         {
             RegisterStore(
                 KongregateStore.STORE_NAME,
-                (Application.platform == RuntimePlatform.WebGLPlayer && KongregateWeb.IsKongregateAPIAvailable()) ? new KongregateStore() : null);
+                (Application.platform == RuntimePlatform.WebGLPlayer && KongregateWeb.IsKongregateAPIAvailable) ? new KongregateStore() : null);
         }
 
         // NOTE: Make the default constructor private so that users must use the
