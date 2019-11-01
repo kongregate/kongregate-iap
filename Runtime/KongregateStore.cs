@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -182,10 +182,10 @@ namespace Kongregate.Purchasing
 
             try
             {
-                var item = Array.Find(
+                var itemIndex = Array.FindIndex(
                     items,
                     userItem => userItem.Identifier == _pendingPurchase.id);
-                if (item == null)
+                if (itemIndex < 0)
                 {
                     _callback.OnPurchaseFailed(new PurchaseFailureDescription(
                         _pendingPurchase.id,
@@ -194,6 +194,7 @@ namespace Kongregate.Purchasing
                     return;
                 }
 
+                var item = items[itemIndex];
                 var receipt = new Receipt()
                 {
                     AuthToken = KongregateWeb.GameAuthToken,
@@ -237,10 +238,10 @@ namespace Kongregate.Purchasing
                             "kreds",
                             storeItem.Price);
 
-                    // If the product is present in the user's item list, provide
-                    // the receipt and transaction ID so that the game code can
-                    // restore the purchase.
-                    if (_userItems.TryGetValue(product.id, out var ownedItems))
+                        // If the product is present in the user's item list, provide
+                        // the receipt and transaction ID so that the game code can
+                        // restore the purchase.
+                        if (_userItems.TryGetValue(product.id, out var ownedItems))
                         {
                             var receipt = new Receipt()
                             {
@@ -248,13 +249,13 @@ namespace Kongregate.Purchasing
                                 Items = ownedItems.Select(item => item.Id).ToArray(),
                             };
 
-                        // NOTE: We make up a transaction ID by joining the various item
-                        // IDs since Kongregate doesn't directly provide a transaction ID.
-                        // The item ID itself will be unique for the purchase so this
-                        // should be fine when there's only a single item in the user's
-                        // inventory. It might be weird if there are ever multiple items,
-                        // though.
-                        var transactionId = string.Join(",", ownedItems.Select(item => item.Id));
+                            // NOTE: We make up a transaction ID by joining the various item
+                            // IDs since Kongregate doesn't directly provide a transaction ID.
+                            // The item ID itself will be unique for the purchase so this
+                            // should be fine when there's only a single item in the user's
+                            // inventory. It might be weird if there are ever multiple items,
+                            // though.
+                            var transactionId = string.Join(",", ownedItems.Select(item => item.Id));
 
                             return new ProductDescription(
                                 product.id,
