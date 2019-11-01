@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Kongregate.Web;
 using UnityEngine;
 using UnityEngine.Purchasing;
 using UnityEngine.Purchasing.Extension;
@@ -16,8 +17,8 @@ namespace Kongregate.Purchasing
 
         // Data tracking the initial request for items on startup.
         private ReadOnlyCollection<ProductDefinition> _pendingProducts;
-        private Dictionary<string, KongregateStoreItem> _storeItems;
-        private Dictionary<string, List<KongregateUserItem>> _userItems;
+        private Dictionary<string, StoreItem> _storeItems;
+        private Dictionary<string, List<UserItem>> _userItems;
 
         // Data tracking the state of a pending purchase flow.
         private ProductDefinition _pendingPurchase;
@@ -113,7 +114,7 @@ namespace Kongregate.Purchasing
             }
         }
 
-        void OnItemList(KongregateStoreItem[] itemList)
+        void OnItemList(StoreItem[] itemList)
         {
             // Convert the list of store items to a dictionary with the product identifier
             // as the keys.
@@ -127,7 +128,7 @@ namespace Kongregate.Purchasing
             }
         }
 
-        void OnUserItemsUpdated(KongregateUserItem[] items)
+        void OnUserItemsUpdated(UserItem[] items)
         {
             // Delegate processing of user items depending on the reason why we requested
             // the updated list of items.
@@ -152,7 +153,7 @@ namespace Kongregate.Purchasing
         /// <summary>
         /// Callback for when we initially request the list of user items on startup.
         /// </summary>
-        void ProcessUserItems(KongregateUserItem[] items)
+        void ProcessUserItems(UserItem[] items)
         {
             // Convert the list of user items to a dictionary with the product identifier
             // as the keys.
@@ -171,7 +172,7 @@ namespace Kongregate.Purchasing
         /// <summary>
         /// Callback for when we request the updated list of user items after making a purchase.
         /// </summary>
-        void OnUpdateUserItemsAfterPurchase(KongregateUserItem[] items)
+        void OnUpdateUserItemsAfterPurchase(UserItem[] items)
         {
             if (_pendingPurchase == null)
             {
