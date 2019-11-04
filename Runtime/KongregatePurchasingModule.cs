@@ -14,14 +14,14 @@ namespace Kongregate.Purchasing
 
         public override void Configure()
         {
-            if (KongregateWeb.Status == KongregateWeb.ApiStatus.Uninitialized)
+            if (KongregateWeb.Status == ApiStatus.Uninitialized)
             {
                 throw new Exception($"You must first intialize {typeof(KongregateWeb).Name} before trying to register the store.");
             }
 
             RegisterStore(
                 KongregateStore.STORE_NAME,
-                (Application.platform == RuntimePlatform.WebGLPlayer && KongregateWeb.Status != KongregateWeb.ApiStatus.Unavailable) ? new KongregateStore() : null);
+                (Application.platform == RuntimePlatform.WebGLPlayer && KongregateWeb.Status != ApiStatus.Unavailable) ? new KongregateStore() : null);
         }
 
         // NOTE: Make the default constructor private so that users must use the
