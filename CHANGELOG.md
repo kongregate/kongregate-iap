@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.1.0]
+
 Initial release, adds `KongregateWeb` class, `KongregateWeb.jslib`, bindings to core parts of the Kongregate JavaScript API, and basic usage instructions.
 
-[Unreleased]: https://github.com/olivierlacan/keep-a-changelog/compare/f97322f...HEAD
+[Unreleased]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.1.0...HEAD
+[v0.1.0]: https://github.com/olivierlacan/keep-a-changelog/compare/f97322f...v0.1.0
